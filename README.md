@@ -1,7 +1,7 @@
 # UTest
 PHP Unit Testing Class
 
-v0.X.0
+v0.0.0
 
 
 
