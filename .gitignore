@@ -6,7 +6,3 @@ nbproject
 ## OS generated files
 .DS_Store
 Thumbs.db
-
-## config files and folders
-/config.php
-/config/
