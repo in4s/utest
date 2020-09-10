@@ -1,5 +1,5 @@
 <?php
-/** in4s\utest */
+/** in4s\UTest */
 
 declare(strict_types=1);
 
@@ -10,7 +10,7 @@ namespace in4s;
  *
  * @version     v1.5.1 2020-09-10 11:47:31
  * @author      Eugeniy Makarkin
- * @package     in4s\utest
+ * @package     in4s\UTest
  */
 class UTest
 {
