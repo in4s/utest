@@ -3,7 +3,7 @@ PHP Unit Testing Class
 
 v1.7.0-beta.2
 
-Using this class you can render unit test results directly on a web page.
+Using this class you can render unit tests results directly on a web page.
 
 ## Getting started
 
