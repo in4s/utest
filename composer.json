@@ -16,6 +16,7 @@
         }
     ],
     "require": {
+        "in4s\bem": "3.*.*",
         "php": ">=7.0.0"
     },
     "autoload": {
