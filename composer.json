@@ -2,7 +2,7 @@
     "name": "in4s/utest",
     "description": "PHP Unit Testing Class",
     "type": "library",
-    "version": "1.7.0-beta.1",
+    "version": "1.7.0-beta.2",
     "keywords": [
         "tdd",
         "php",
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "in4s\bem": "3.*.*",
+        "in4s/bem": "3.*.*",
         "php": ">=7.0.0"
     },
     "autoload": {
