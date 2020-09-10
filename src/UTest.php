@@ -1,5 +1,5 @@
 <?php
-/** in4s\base */
+/** in4s\utest */
 
 declare(strict_types=1);
 
@@ -25,8 +25,6 @@ class UTest
 
     /**
      * UTest Constructor
-     *
-     * @version v1.0.2 2020-09-10 11:48:09
      */
     public function __construct()
     {
@@ -37,12 +35,9 @@ class UTest
      * Magical method __get.
      * Get value of the object property if the property exists
      *
-     * @version v1.1.0 2019-05-24 21:07:33
-     *
      * @param string $property - Property name
      *
      * @return mixed
-     * @throws \Exception
      */
     public function __get(string $property)
     {
@@ -67,8 +62,6 @@ class UTest
     /**
      * Magical method __set.
      * Set the value to the property
-     *
-     * @version v2.0.0 2020-07-16 14:12:53
      *
      * @param string $property - Property Name
      * @param string $value    - New value
@@ -99,8 +92,6 @@ class UTest
 
     /**
      * Check if the result is strict equal to the expected
-     *
-     * @version v1.0.2 2018-11-30 11:06:04
      *
      * @param string $testName       - Test name
      * @param mixed  $expectedResult - Expected result
@@ -143,8 +134,6 @@ class UTest
     /**
      * Return the single value
      *
-     * @version v1.0.3 2018-11-30 11:09:43
-     *
      * @param mixed $value - The value
      *
      * @return string - html tag with the given value
@@ -176,8 +165,6 @@ class UTest
 
     /**
      * Render the JavaScript testing interface
-     *
-     * @version v1.0.3 2020-07-15 20:50:09
      *
      * @param string $version - File version (for caching)
      *

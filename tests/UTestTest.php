@@ -8,7 +8,7 @@ namespace in4s;
 /**
  * Class UTestTest - Tests for class UTest
  *
- * @version     v2.0.0 2020-07-16 14:59:24
+ * @version     v2.0.1 2020-09-10 11:57:43
  * @package     in4s\UTest
  * @author      Eugeniy Makarkin
  */
@@ -18,7 +18,6 @@ class UTestTest
     /**
      * Run tests of the current class
      *
-     * @version v2.0.0 2020-07-16 14:59:24
      * @return void
      */
     public static function run()
@@ -33,7 +32,6 @@ class UTestTest
     /**
      * isEqual method test
      *
-     * @version v2.0.0 2020-07-16 14:59:24
      * @return string - html tag with the message of the test result
      */
     public static function isEqualTest(): string
@@ -86,7 +84,6 @@ class UTestTest
     /**
      * theValue method test
      *
-     * @version v2.0.0 2020-07-16 14:59:24
      * @return string - html tag with the message of the test result
      */
     public static function theValueTest(): string
