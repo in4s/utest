@@ -22,6 +22,8 @@ class UTest
     protected $nextHint;
     /** @var string|null $triggeredErrorText - Triggered error text */
     protected $triggeredErrorText;
+    /** @var Bem $Bem - Bem object */
+    private $Bem;
 
     /**
      * UTest Constructor
