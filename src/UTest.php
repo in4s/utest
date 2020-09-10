@@ -180,4 +180,20 @@ class UTest
         echo $Bem->tag('script[src=https://code.jquery.com/qunit/qunit-2.5.1.js]') . "\n";
         echo $Bem->tag("script[src=/bemblockstests.js?{$version}]") . "\n";
     }
+
+    public function renderStyles()
+    {
+        include 'styles.php';
+    }
+
+    public function renderScripts()
+    {
+        include 'scripts.php';
+    }
+
+    public function renderStylesAndScripts()
+    {
+        $this->renderStyles();
+        $this->renderScripts();
+    }
 }
