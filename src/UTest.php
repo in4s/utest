@@ -181,19 +181,37 @@ class UTest
         echo $Bem->tag("script[src=/bemblockstests.js?{$version}]") . "\n";
     }
 
+    /**
+     * Render css styles and js scripts needed for UTest
+     *
+     * @since v1.7.0
+     * @return void
+     */
+    public function renderStylesAndScripts()
+    {
+        $this->renderStyles();
+        $this->renderScripts();
+    }
+
+    /**
+     * Render css styles needed for a good UTest appearance
+     *
+     * @since v1.7.0
+     * @return void
+     */
     public function renderStyles()
     {
         include 'styles.php';
     }
 
+    /**
+     * Render js scripts needed for UTest actions
+     *
+     * @since v1.7.0
+     * @return void
+     */
     public function renderScripts()
     {
         include 'scripts.php';
-    }
-
-    public function renderStylesAndScripts()
-    {
-        $this->renderStyles();
-        $this->renderScripts();
     }
 }
