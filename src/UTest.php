@@ -28,6 +28,7 @@ class UTest
      */
     public function __construct()
     {
+        $this->Bem = new Bem();
         $this->functionResults = '';
     }
 
@@ -70,13 +71,12 @@ class UTest
      */
     public function __set(string $property, $value)
     {
-        global $Bem;
         switch ($property) {
             case 'functionResults':
                 throw new \Exception('UTest Exception: property not editable', 1);
                 break;
             case 'methodName':
-                $this->functionResults = $Bem->tag('h6', $value . '():');
+                $this->functionResults = $this->Bem->tag('h6', $value . '():');
                 $this->methodName = $value;
                 break;
             case 'nextHint':
@@ -101,7 +101,6 @@ class UTest
      */
     public function isEqual(string $testName, $expectedResult, $functionReturn): bool
     {
-        global $Bem;
 
         // Replace the substitution
         if (is_string($expectedResult)) {
@@ -119,9 +118,9 @@ class UTest
         $result = $functionReturn === $expectedResult;
 
         if ($result) {
-            $r = $Bem->tag(".utest__result_true[data-j4c={$this->nextHint}]", $testName);
+            $r = $this->Bem->tag(".utest__result_true[data-j4c={$this->nextHint}]", $testName);
         } else {
-            $r = $Bem->tag(".utest__result_false[data-j4c={$this->nextHint}]", "{$testName}: false. Expected (" . gettype($expectedResult) . ")<br>{$this->theValue($expectedResult)}<br> Function returned (" . gettype($functionReturn) . ")<br>{$this->theValue($functionReturn)}") . "<hr>";
+            $r = $this->Bem->tag(".utest__result_false[data-j4c={$this->nextHint}]", "{$testName}: false. Expected (" . gettype($expectedResult) . ")<br>{$this->theValue($expectedResult)}<br> Function returned (" . gettype($functionReturn) . ")<br>{$this->theValue($functionReturn)}") . "<hr>";
         }
 
         $this->functionResults .= $r;
@@ -140,7 +139,6 @@ class UTest
      */
     public function theValue($value): string
     {
-        global $Bem;
         if ($value === false) {
             $value = 'false';
         }
@@ -160,7 +158,7 @@ class UTest
         // Converting type to string
         $value = '' . $value;
 
-        return '-!' . $Bem->tag('strong.utest__value', "<pre>" . htmlentities($value) . "</pre>") . '!-';
+        return '-!' . $this->Bem->tag('strong.utest__value', "<pre>" . htmlentities($value) . "</pre>") . '!-';
     }
 
     /**
@@ -172,13 +170,12 @@ class UTest
      */
     public function jsTests(string $version)
     {
-        global $Bem;
-        echo $Bem->tag('#jssendbox.utest__jssendbox');
-        echo $Bem->tag('link[rel=stylesheet][href=https://code.jquery.com/qunit/qunit-2.5.1.css]', null) . "\n";
-        echo $Bem->tag('#qunit') . "\n";
-        echo $Bem->tag('#qunit-fixture') . "\n";
-        echo $Bem->tag('script[src=https://code.jquery.com/qunit/qunit-2.5.1.js]') . "\n";
-        echo $Bem->tag("script[src=/bemblockstests.js?{$version}]") . "\n";
+        echo $this->Bem->tag('#jssendbox.utest__jssendbox');
+        echo $this->Bem->tag('link[rel=stylesheet][href=https://code.jquery.com/qunit/qunit-2.5.1.css]', null) . "\n";
+        echo $this->Bem->tag('#qunit') . "\n";
+        echo $this->Bem->tag('#qunit-fixture') . "\n";
+        echo $this->Bem->tag('script[src=https://code.jquery.com/qunit/qunit-2.5.1.js]') . "\n";
+        echo $this->Bem->tag("script[src=/bemblockstests.js?{$version}]") . "\n";
     }
 
     /**
