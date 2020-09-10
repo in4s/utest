@@ -1,7 +1,7 @@
 # UTest
 PHP Unit Testing Class
 
-v1.6.0
+v1.7.0-beta.1
 
 
 
