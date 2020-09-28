@@ -26,6 +26,8 @@ class UTestTest
         echo '<h5>UTest:</h5>';
         echo self::isEqualTest();
         echo self::theValueTest();
+        echo self::setServerEmulationTest();
+        echo self::unsetServerEmulationTest();
         echo '</div>';
     }
 
@@ -118,6 +120,80 @@ class UTestTest
         $act = $UTest->theValue(false);
         // Assert Test
         $UTest->isEqual("theValue(false);", $expect, $act);
+
+
+        return $UTest->functionResults;
+    }
+
+    /**
+     * SetServerEmulation method test
+     *
+     * @return string - html tag with the message of the test result
+     */
+    public static function setServerEmulationTest(): string
+    {
+        global $UTest;
+
+        $UTest->methodName = 'setServerEmulation';
+
+
+        // Arrange Test
+        $UTest->nextHint = 'Emulate HTTP_HOST to google.com';
+        $expect = 'google.com';
+        // Act
+        $UTest->setServerEmulation('HTTP_HOST', 'google.com');
+        $act = $_SERVER['HTTP_HOST'];
+        $UTest->unsetServerEmulation('HTTP_HOST');
+        // Assert Test
+        $UTest->isEqual("setServerEmulation('HTTP_HOST', 'google.com')", $expect, $act);
+
+
+        // Arrange Test
+        $UTest->nextHint = 'Emulate SERVER_ADDR to 1.1.1.1';
+        $expect = '1.1.1.1';
+        // Act
+        $UTest->setServerEmulation('SERVER_ADDR', '1.1.1.1');
+        $act = $_SERVER['SERVER_ADDR'];
+        $UTest->unsetServerEmulation('SERVER_ADDR');
+        // Assert Test
+        $UTest->isEqual("setServerEmulation('SERVER_ADDR', '1.1.1.1')", $expect, $act);
+
+
+        return $UTest->functionResults;
+    }
+
+    /**
+     * UnsetServerEmulation method test
+     *
+     * @return string - html tag with the message of the test result
+     */
+    public static function unsetServerEmulationTest(): string
+    {
+        global $UTest;
+
+        $UTest->methodName = 'unsetServerEmulation';
+
+
+        // Arrange Test
+        $UTest->nextHint = 'Unset emulation HTTP_HOST';
+        $expect = $_SERVER['HTTP_HOST'];
+        // Act
+        $UTest->setServerEmulation('HTTP_HOST', 'google.com');
+        $UTest->unsetServerEmulation('HTTP_HOST');
+        $act = $_SERVER['HTTP_HOST'];
+        // Assert Test
+        $UTest->isEqual("unsetServerEmulation('HTTP_HOST')", $expect, $act);
+
+
+        // Arrange Test
+        $UTest->nextHint = 'Unset emulation SERVER_ADDR';
+        $expect = $_SERVER['SERVER_ADDR'];
+        // Act
+        $UTest->setServerEmulation('SERVER_ADDR', '1.1.1.1');
+        $UTest->unsetServerEmulation('SERVER_ADDR');
+        $act = $_SERVER['SERVER_ADDR'];
+        // Assert Test
+        $UTest->isEqual("unsetServerEmulation('SERVER_ADDR')", $expect, $act);
 
 
         return $UTest->functionResults;

@@ -14,6 +14,8 @@ namespace in4s;
  */
 class UTest
 {
+    /** @var array $serverEmulation - Server emulation array */
+    public $serverEmulation = [];
     /** @var string $functionResults - Contains html code of all test results in this context */
     protected $functionResults;
     /** @var string $methodName - Name of testing method (function) */
@@ -212,5 +214,36 @@ class UTest
     public function renderScripts()
     {
         include 'scripts.php';
+    }
+
+    /**
+     * Set superglobals $_SERVER emulation value
+     * Need to roll back using unsetServerEmulation method after the test finished
+     *
+     * @since v1.8.0
+     *
+     * @param string $key
+     * @param string $newValue
+     *
+     * @return void
+     */
+    public function setServerEmulation(string $key, string $newValue)
+    {
+        $this->serverEmulation[$key] = $_SERVER[$key];
+        $_SERVER[$key] = $newValue;
+    }
+
+    /**
+     * Roll back superglobals $_SERVER emulation value
+     *
+     * @since v1.8.0
+     *
+     * @param string $key
+     *
+     * @return void
+     */
+    public function unsetServerEmulation(string $key)
+    {
+        $_SERVER[$key] = $this->serverEmulation[$key];
     }
 }
