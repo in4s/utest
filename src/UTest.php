@@ -16,10 +16,20 @@ class UTest
 {
     /** @var array $serverEmulation - Server emulation array */
     public $serverEmulation = [];
+    /** @var int $totalTestsNumber - Total number of tests performed */
+    public $totalTestsNumber = 0;
+    /** @var int $totalNumberOfFailedTests - Total number of failed tests */
+    public $totalNumberOfFailedTests = 0;
+    /** @var int $unitTestsNumber - Number of tests performed in the current unit */
+    public $unitTestsNumber = 0;
+    /** @var int $numberOfFailedUnitTests - Number of failed tests in the current unit */
+    public $numberOfFailedUnitTests = 0;
     /** @var string $functionResults - Contains html code of all test results in this context */
     protected $functionResults;
     /** @var string $methodName - Name of testing method (function) */
     protected $methodName;
+    /** @var string $lastModuleName - Name of the last tested class (module) */
+    protected $lastModuleName;
     /** @var string $nextHint - Hint text for the next test */
     protected $nextHint;
     /** @var string|null $triggeredErrorText - Triggered error text */
@@ -120,6 +130,7 @@ class UTest
 
 
         $result = $functionReturn === $expectedResult;
+        $this->considerTest($result);
 
         if ($result) {
             $r = $this->Bem->tag(".utest__result_true[data-j4c={$this->nextHint}]", $testName);
@@ -245,5 +256,29 @@ class UTest
     public function unsetServerEmulation(string $key)
     {
         $_SERVER[$key] = $this->serverEmulation[$key];
+    }
+
+    /**
+     * Take into account the test result in unit and in the total number of tests
+     *
+     * @since v1.8.0
+     *
+     * @param bool $testResult - current test result
+     *
+     * @return void
+     */
+    private function considerTest(bool $testResult)
+    {
+        if ($this->lastModuleName !== __CLASS__) {
+            $this->unitTestsNumber = 0;
+            $this->numberOfFailedUnitTests = 0;
+            $this->lastModuleName = __CLASS__;
+        }
+        if (!$testResult) {
+            $this->totalNumberOfFailedTests++;
+            $this->numberOfFailedUnitTests++;
+        }
+        $this->totalTestsNumber++;
+        $this->unitTestsNumber++;
     }
 }

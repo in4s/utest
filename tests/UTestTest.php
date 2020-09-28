@@ -28,6 +28,7 @@ class UTestTest
         echo self::theValueTest();
         echo self::setServerEmulationTest();
         echo self::unsetServerEmulationTest();
+        // echo self::considerTestTest();
         echo '</div>';
     }
 
@@ -194,6 +195,77 @@ class UTestTest
         $act = $_SERVER['SERVER_ADDR'];
         // Assert Test
         $UTest->isEqual("unsetServerEmulation('SERVER_ADDR')", $expect, $act);
+
+
+        return $UTest->functionResults;
+    }
+
+    /**
+     * ConsiderTest method test
+     *
+     * @return string - html tag with the message of the test result
+     */
+    public static function considerTestTest(): string
+    {
+        global $UTest;
+
+        $UTest->methodName = 'considerTest';
+
+
+        // Arrange Test
+        $UTest->nextHint = 'True for the same module';
+        $expect = '1111';
+        $totalNumberOfFailedTests = $UTest->totalNumberOfFailedTests;
+        $numberOfFailedUnitTests = $UTest->numberOfFailedUnitTests;
+        $totalTestsNumber = $UTest->totalTestsNumber;
+        $unitTestsNumber = $UTest->unitTestsNumber;
+        // Act
+        $UTest->considerTest(true);
+        $t1 = $totalNumberOfFailedTests === $UTest->totalNumberOfFailedTests;
+        $t2 = $numberOfFailedUnitTests === $UTest->numberOfFailedUnitTests;
+        $t3 = $totalTestsNumber === $UTest->totalTestsNumber - 1;
+        $t4 = $unitTestsNumber === $UTest->unitTestsNumber - 1;
+        $act = $t1 . $t2 . $t3 . $t4;
+        // Assert Test
+        $UTest->isEqual("considerTest(true)", $expect, $act);
+
+
+        // Arrange Test
+        $UTest->nextHint = 'False for the same module';
+        $expect = '1111';
+        $totalNumberOfFailedTests = $UTest->totalNumberOfFailedTests;
+        $numberOfFailedUnitTests = $UTest->numberOfFailedUnitTests;
+        $totalTestsNumber = $UTest->totalTestsNumber;
+        $unitTestsNumber = $UTest->unitTestsNumber;
+        // Act
+        $UTest->considerTest(false);
+        $t1 = $totalNumberOfFailedTests === $UTest->totalNumberOfFailedTests - 1 ? 1 : 0;
+        $t2 = $numberOfFailedUnitTests === $UTest->numberOfFailedUnitTests - 1 ? 1 : 0;
+        $t3 = $totalTestsNumber === $UTest->totalTestsNumber - 1 ? 1 : 0;
+        $t4 = $unitTestsNumber === $UTest->unitTestsNumber - 1 ? 1 : 0;
+        $act = $t1 . $t2 . $t3 . $t4;
+        // Assert Test
+        $UTest->isEqual("considerTest(false)", $expect, $act);
+
+
+        // Arrange Test
+        $UTest->nextHint = 'False for the new module';
+        $expect = '1111';
+        $totalNumberOfFailedTests = $UTest->totalNumberOfFailedTests;
+        $numberOfFailedUnitTests = $UTest->numberOfFailedUnitTests;
+        $totalTestsNumber = $UTest->totalTestsNumber;
+        $unitTestsNumber = $UTest->unitTestsNumber;
+        // Act
+        $UTest->lastModuleName = 'Lorem';
+        $UTest->considerTest(false);
+        $t1 = $totalNumberOfFailedTests === $UTest->totalNumberOfFailedTests - 1 ? 1 : 0;
+        $t2 = $UTest->numberOfFailedUnitTests === 1 ? 1 : 0;
+        $t3 = $totalTestsNumber === $UTest->totalTestsNumber - 1 ? 1 : 0;
+        $t4 = $UTest->unitTestsNumber === 1 ? 1 : 0;
+        $act = $t1 . $t2 . $t3 . $t4;
+        $UTest->lastModuleName = 'in4s\UTest';
+        // Assert Test
+        $UTest->isEqual("considerTest(false)", $expect, $act);
 
 
         return $UTest->functionResults;
