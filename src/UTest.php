@@ -90,7 +90,7 @@ class UTest
                 throw new \Exception('UTest Exception: property not editable', 1);
                 break;
             case 'methodName':
-                $this->functionResults = $this->Bem->tag('h6', $value . '():');
+                $this->functionResults = $this->Bem->tag('h6.utest__method-name', $value . '():');
                 $this->methodName = $value;
                 break;
             case 'nextHint':

@@ -23,7 +23,7 @@ class UTestTest
     public static function run()
     {
         echo '<div class="utest__section">';
-        echo '<h5>UTest:</h5>';
+        echo '<h5 class="utest__module-name">UTest:</h5>';
         echo self::isEqualTest();
         echo self::theValueTest();
         echo self::setServerEmulationTest();
@@ -49,7 +49,7 @@ class UTestTest
         $UTest->nextHint = 'The simplest check true == true';
         $UTest1->methodName = 'isEqual';
         $UTest1->nextHint = 'The simplest check true == true';
-        $expect = '<h6>isEqual():</h6><div class="utest__result utest__result_true" data-j4c="The simplest check true == true">true==true</div>';
+        $expect = '<h6 class="utest__method-name">isEqual():</h6><div class="utest__result utest__result_true" data-j4c="The simplest check true == true">true==true</div>';
         // Act
         $UTest1->isEqual('true==true', true, true);
         $act = $UTest1->functionResults;
@@ -61,7 +61,7 @@ class UTestTest
         $UTest->nextHint = 'The simplest check false == false';
         $UTest1->methodName = 'isEqual';
         $UTest1->nextHint = 'The simplest check false == false';
-        $expect = '<h6>isEqual():</h6><div class="utest__result utest__result_true" data-j4c="The simplest check false == false">false==false</div>';
+        $expect = '<h6 class="utest__method-name">isEqual():</h6><div class="utest__result utest__result_true" data-j4c="The simplest check false == false">false==false</div>';
         // Act
         $UTest1->isEqual('false==false', false, false);
         $act = $UTest1->functionResults;
@@ -73,7 +73,7 @@ class UTestTest
         $UTest->nextHint = 'With < html> tag on a popup comment';
         $UTest1->methodName = 'isEqual';
         $UTest1->nextHint = 'With < html> tag on a popup comment';
-        $expect = '<h6>isEqual():</h6><div class="utest__result utest__result_true" data-j4c="With &lt; html&gt; tag on a popup comment">false==false</div>';
+        $expect = '<h6 class="utest__method-name">isEqual():</h6><div class="utest__result utest__result_true" data-j4c="With &lt; html&gt; tag on a popup comment">false==false</div>';
         // Act
         $UTest1->isEqual('false==false', false, false);
         $act = $UTest1->functionResults;

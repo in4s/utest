@@ -4,7 +4,7 @@
 
         if (urlParams.has('hidepassed')) {
             $(".utest__result_true, .utest__section h6").hide();
-            $("h5").css("background", "green");
+            $(".utest__section h5").css("background", "rgba(71, 176, 108, 0.75)");
         }
     });
     /*BGN j4Commentary v80317*/

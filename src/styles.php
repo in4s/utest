@@ -20,16 +20,15 @@
 
     /* UTest Result element */
     .utest__result {
-
+        color: black;
     }
 
     .utest__result_true {
-        background: green;
+        background: rgba(71, 176, 108, 0.75);
     }
 
     .utest__result_false {
-        background: darkred;
-        color: white;
+        background: rgba(229, 120, 114, 0.82);
     }
 
     .utest__section h5, .utest__section h6 {
