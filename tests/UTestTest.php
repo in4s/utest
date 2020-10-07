@@ -98,7 +98,7 @@ class UTestTest
 
         // Arrange Test
         $UTest->nextHint = 'If the value = 5';
-        $expect = '-!<strong class="utest__value"><pre>5</pre></strong>!-';
+        $expect = '<strong class="utest__value"><pre>5</pre></strong>';
         // Act
         $act = $UTest->theValue(5);
         // Assert Test
@@ -107,7 +107,7 @@ class UTestTest
 
         // Arrange Test
         $UTest->nextHint = 'If the value = true';
-        $expect = '-!<strong class="utest__value"><pre>true</pre></strong>!-';
+        $expect = '<strong class="utest__value"><pre>true</pre></strong>';
         // Act
         $act = $UTest->theValue(true);
         // Assert Test
@@ -116,7 +116,7 @@ class UTestTest
 
         // Arrange Test
         $UTest->nextHint = 'If the value = false';
-        $expect = '-!<strong class="utest__value"><pre>false</pre></strong>!-';
+        $expect = '<strong class="utest__value"><pre>false</pre></strong>';
         // Act
         $act = $UTest->theValue(false);
         // Assert Test

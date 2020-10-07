@@ -21,18 +21,33 @@
     /* UTest Result element */
     .utest__result {
         color: black;
+        border-top: 1px solid white;
+        padding: 3px 5px;
     }
 
     .utest__result_true {
-        background: rgba(71, 176, 108, 0.75);
+        background: rgba(71, 176, 108, 0.50);
     }
 
     .utest__result_false {
-        background: rgba(229, 120, 114, 0.82);
+        background: rgba(229, 120, 114, 0.50);
+    }
+
+    .utest__result pre {
+        margin: 0;
+    }
+
+    .utest__result hr {
+        margin: 0 -5px;
+        height: 1px;
+        border: 0;
+        background-color: gray;
     }
 
     .utest__section h5, .utest__section h6 {
         margin: 0;
+        color: black;
+        padding: 3px 5px;
     }
 
     .j4c {

@@ -135,7 +135,7 @@ class UTest
         if ($result) {
             $r = $this->Bem->tag(".utest__result_true[data-j4c={$this->nextHint}]", $testName);
         } else {
-            $r = $this->Bem->tag(".utest__result_false[data-j4c={$this->nextHint}]", "{$testName}: false. Expected (" . gettype($expectedResult) . ")<br>{$this->theValue($expectedResult)}<br> Function returned (" . gettype($functionReturn) . ")<br>{$this->theValue($functionReturn)}") . "<hr>";
+            $r = $this->Bem->tag(".utest__result_false[data-j4c={$this->nextHint}]", "{$testName}: false.<br>Expected (" . gettype($expectedResult) . ") &#9660;<hr>{$this->theValue($expectedResult)}<hr>{$this->theValue($functionReturn)}<hr> Returned (" . gettype($functionReturn) . ") &#9650;");
         }
 
         $this->functionResults .= $r;
@@ -173,7 +173,7 @@ class UTest
         // Converting type to string
         $value = '' . $value;
 
-        return '-!' . $this->Bem->tag('strong.utest__value', "<pre>" . htmlentities($value) . "</pre>") . '!-';
+        return $this->Bem->tag('strong.utest__value', "<pre>" . htmlentities($value) . "</pre>");
     }
 
     /**
