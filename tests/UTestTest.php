@@ -8,7 +8,7 @@ namespace in4s;
 /**
  * Class UTestTest - Tests for class UTest
  *
- * @version     v2.0.1 2020-09-10 11:57:43
+ * @version     v2.1.0 2020-10-07 23:05:57
  * @package     in4s\UTest
  * @author      Eugeniy Makarkin
  */
@@ -26,6 +26,8 @@ class UTestTest
         echo '<h5 class="utest__module-name">UTest:</h5>';
         echo self::isEqualTest();
         echo self::theValueTest();
+        echo self::setSuperglobalEmulationTest();
+        echo self::unsetSuperglobalEmulationTest();
         echo self::setServerEmulationTest();
         echo self::unsetServerEmulationTest();
         // echo self::considerTestTest();
@@ -125,6 +127,81 @@ class UTestTest
 
         return $UTest->functionResults;
     }
+
+    /**
+     * SetSuperglobalEmulation method test
+     *
+     * @return string - html tag with the message of the test result
+     */
+    public static function setSuperglobalEmulationTest(): string
+    {
+        global $UTest;
+
+        $UTest->methodName = 'setSuperglobalEmulation';
+
+
+        // Arrange Test
+        $UTest->nextHint = 'Emulate HTTP_HOST to google.com';
+        $expect = 'google.com';
+        // Act
+        $UTest->setSuperglobalEmulation('_SERVER', 'HTTP_HOST', 'google.com');
+        $act = $_SERVER['HTTP_HOST'];
+        $UTest->unsetSuperglobalEmulation('_SERVER', 'HTTP_HOST');
+        // Assert Test
+        $UTest->isEqual("setSuperglobalEmulation('_SERVER', 'HTTP_HOST', 'google.com')", $expect, $act);
+
+
+        // Arrange Test
+        $UTest->nextHint = 'Emulate gettest to getvalue';
+        $expect = 'getvalue';
+        // Act
+        $UTest->setSuperglobalEmulation('_GET', 'gettest', 'getvalue');
+        $act = $_GET['gettest'];
+        $UTest->unsetSuperglobalEmulation('_GET', 'gettest');
+        // Assert Test
+        $UTest->isEqual("setSuperglobalEmulation('_GET', 'gettest', 'getvalue')", $expect, $act);
+
+
+        return $UTest->functionResults;
+    }
+
+    /**
+     * UnsetSuperglobalEmulation '_SERVER', method test
+     *
+     * @return string - html tag with the message of the test result
+     */
+    public static function unsetSuperglobalEmulationTest(): string
+    {
+        global $UTest;
+
+        $UTest->methodName = 'unsetSuperglobalEmulation';
+
+
+        // Arrange Test
+        $UTest->nextHint = 'Unset emulation HTTP_HOST';
+        $expect = $_SERVER['HTTP_HOST'];
+        // Act
+        $UTest->setSuperglobalEmulation('_SERVER', 'HTTP_HOST', 'google.com');
+        $UTest->unsetSuperglobalEmulation('_SERVER', 'HTTP_HOST');
+        $act = $_SERVER['HTTP_HOST'];
+        // Assert Test
+        $UTest->isEqual("unsetSuperglobalEmulation('_SERVER', 'HTTP_HOST')", $expect, $act);
+
+
+        // Arrange Test
+        $UTest->nextHint = 'Unset emulation SERVER_ADDR';
+        $expect = $_GET['gettest'];
+        // Act
+        $UTest->setSuperglobalEmulation('_GET', 'gettest', 'getvalue');
+        $UTest->unsetSuperglobalEmulation('_GET', 'gettest');
+        $act = $_GET['gettest'];
+        // Assert Test
+        $UTest->isEqual("unsetSuperglobalEmulation('_GET', 'gettest')", $expect, $act);
+
+
+        return $UTest->functionResults;
+    }
+
 
     /**
      * SetServerEmulation method test
