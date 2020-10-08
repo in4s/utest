@@ -8,14 +8,14 @@ namespace in4s;
 /**
  * Unit testing functions and methods
  *
- * @version     v1.5.1 2020-09-10 11:47:31
+ * @version     v1.6.1 2020-10-07 23:09:35
  * @author      Eugeniy Makarkin
  * @package     in4s\UTest
  */
 class UTest
 {
     /** @var array $serverEmulation - Server emulation array */
-    public $serverEmulation = [];
+    public $superglobalEmulations = [];
     /** @var int $totalTestsNumber - Total number of tests performed */
     public $totalTestsNumber = 0;
     /** @var int $totalNumberOfFailedTests - Total number of failed tests */
@@ -228,6 +228,39 @@ class UTest
     }
 
     /**
+     * Set the emulation value for the given superglobal
+     * Need to roll back using unsetSuperglobalEmulation method after the test finished
+     *
+     * @since v1.8.0
+     *
+     * @param string $superglobal - The name of the superglobal array, such as "_SERVER"
+     * @param string $key
+     * @param string $newValue
+     *
+     * @return void
+     */
+    public function setSuperglobalEmulation(string $superglobal, string $key, string $newValue)
+    {
+        $this->superglobalEmulations[$superglobal][$key] = $GLOBALS[$superglobal][$key];
+        $GLOBALS[$superglobal][$key] = $newValue;
+    }
+
+    /**
+     * Roll back superglobals $_SERVER emulation value
+     *
+     * @since v1.8.0
+     *
+     * @param string $superglobal - The name of the superglobal array, such as "_SERVER"
+     * @param string $key
+     *
+     * @return void
+     */
+    public function unsetSuperglobalEmulation(string $superglobal, string $key)
+    {
+        $GLOBALS[$superglobal][$key] = $this->superglobalEmulations[$superglobal][$key];
+    }
+
+    /**
      * Set superglobals $_SERVER emulation value
      * Need to roll back using unsetServerEmulation method after the test finished
      *
@@ -240,8 +273,7 @@ class UTest
      */
     public function setServerEmulation(string $key, string $newValue)
     {
-        $this->serverEmulation[$key] = $_SERVER[$key];
-        $_SERVER[$key] = $newValue;
+        $this->setSuperglobalEmulation('_SERVER', $key, $newValue);
     }
 
     /**
@@ -255,7 +287,7 @@ class UTest
      */
     public function unsetServerEmulation(string $key)
     {
-        $_SERVER[$key] = $this->serverEmulation[$key];
+        $this->unsetSuperglobalEmulation('_SERVER', $key);
     }
 
     /**
