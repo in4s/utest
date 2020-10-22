@@ -8,7 +8,7 @@ namespace in4s;
 /**
  * Unit testing functions and methods
  *
- * @version     v1.6.1 2020-10-07 23:09:35
+ * @version     v1.7.0 2020-10-22 16:45:57
  * @author      Eugeniy Makarkin
  * @package     in4s\UTest
  */
@@ -288,6 +288,50 @@ class UTest
     public function unsetServerEmulation(string $key)
     {
         $this->unsetSuperglobalEmulation('_SERVER', $key);
+    }
+
+    /**
+     * Set class emulation by making a copy of the class file with replacements in its contents
+     * UTCopy will be appended to the name of the new class at the end
+     *
+     * @since v1.9.0
+     *
+     * @param string $classFileNameWithPath
+     * @param array  $replacements - Array of replacements like [[search => replace], [search => replace]]
+     *
+     * @return void
+     */
+    public function setClassEmulation(string $classFileNameWithPath, array $replacements)
+    {
+        $filePathInfo = pathinfo($classFileNameWithPath);
+        $newClassFileNameWithPath = "{$filePathInfo['dirname']}/{$filePathInfo['filename']}UTCopy.php";
+        copy($classFileNameWithPath, $newClassFileNameWithPath);
+        $_SESSION['uTestTemporaryFiles'][$newClassFileNameWithPath] = 1;
+
+        // Add replacement: "class CLASS_NAME" to "class CLASS_NAMEUTCopy"
+        $replacements[] = ["class {$filePathInfo['filename']}", "class {$filePathInfo['filename']}UTCopy"];
+        $newFileContent = file_get_contents($newClassFileNameWithPath);
+        foreach ($replacements as $replacement) {
+            $newFileContent = str_replace($replacement[0], $replacement[1], $newFileContent);
+        }
+        file_put_contents($newClassFileNameWithPath, $newFileContent);
+    }
+
+    /**
+     * Unset class emulation by removing emulated file
+     *
+     * @since v1.9.0
+     *
+     * @param string $classFileNameWithPath
+     *
+     * @return void
+     */
+    public function unsetClassEmulation(string $classFileNameWithPath)
+    {
+        $filePathInfo = pathinfo($classFileNameWithPath);
+        $newClassFileNameWithPath = "{$filePathInfo['dirname']}/{$filePathInfo['filename']}UTCopy.php";
+        unlink($newClassFileNameWithPath);
+        unset($_SESSION['uTestTemporaryFiles'][$newClassFileNameWithPath]);
     }
 
     /**
