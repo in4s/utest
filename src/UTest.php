@@ -297,7 +297,7 @@ class UTest
      * @since v1.9.0
      *
      * @param string $classFileNameWithPath
-     * @param array  $replacements - Array of replacements like [[search => replace], [search => replace]]
+     * @param array  $replacements - Array of replacements like [[search, replace], [search, replace]]
      *
      * @return void
      */
