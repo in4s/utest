@@ -297,12 +297,17 @@ class UTest
      * @since v1.9.0
      *
      * @param string $classFileNameWithPath
-     * @param array  $replacements - Array of replacements like [[search, replace], [search, replace]]
+     * @param array  $replacements        - Array of replacements like [[s, r], [s, r]] or [s, r] (s - Search, r - Replace)
+     * @param array  $criticalTextToAvoid - Texts, prohibitted to be inside a new file
      *
      * @return void
      */
-    public function setClassEmulation(string $classFileNameWithPath, array $replacements)
+    public function setClassEmulation(string $classFileNameWithPath, array $replacements, array $criticalTextsToAvoid = [])
     {
+        if (!is_array($replacements[0])) {
+            $replacements = [$replacements];
+        }
+
         $filePathInfo = pathinfo($classFileNameWithPath);
         $newClassFileNameWithPath = "{$filePathInfo['dirname']}/{$filePathInfo['filename']}UTCopy.php";
         copy($classFileNameWithPath, $newClassFileNameWithPath);
@@ -312,9 +317,19 @@ class UTest
         $replacements[] = ["class {$filePathInfo['filename']}", "class {$filePathInfo['filename']}UTCopy"];
         $newFileContent = file_get_contents($newClassFileNameWithPath);
         foreach ($replacements as $replacement) {
+            $newFileContent0 = $newFileContent;
             $newFileContent = str_replace($replacement[0], $replacement[1], $newFileContent);
+            if ($newFileContent === $newFileContent0) {
+                die('Error: Replacement of "' . $replacement[0] . '" failed!');
+            }
         }
         file_put_contents($newClassFileNameWithPath, $newFileContent);
+
+        foreach ($criticalTextsToAvoid as $criticalTextToAvoid) {
+            if (strpos($newFileContent, $criticalTextToAvoid)) {
+                die('Error: Critical text "' . $criticalTextToAvoid . '" is present!');
+            }
+        }
     }
 
     /**

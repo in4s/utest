@@ -14,6 +14,7 @@ namespace in4s;
  */
 class UTestTest
 {
+    const CLASS_FILE_NAME_WITH_PATH = __DIR__ . '/../src/UTest.php';
 
     /**
      * Run tests of the current class
@@ -289,13 +290,11 @@ class UTestTest
         global $UTest;
 
         $UTest->methodName = 'setClassEmulation';
+        $methodToReport = 'setClassEmulation(UTEST, [[search, replace], [search, replace]])';
 
-        // Arrange Test
-
-        $expect = 'expected';
         // Act
         $UTest->setClassEmulation(
-            __DIR__ . '/../src/UTest.php',
+            self::CLASS_FILE_NAME_WITH_PATH,
             [
                 ['$GLOBALS[', '$globalsTest['],
             ]
@@ -306,35 +305,75 @@ class UTestTest
         $UTest->nextHint = 'The file UTestUTCopy.php is created';
         $newFileNameWithPath = __DIR__ . '/../src/UTestUTCopy.php';
         $fileIsCreated = file_exists($newFileNameWithPath);
-        $UTest->isEqual("setClassEmulation(UTEST) - Step 1 - file copy is created", true, $fileIsCreated);
+        $UTest->isEqual("{$methodToReport} - Step 1 - file copy is created", true, $fileIsCreated);
 
         // Test: the file does not contain "class UTest\n{" 
         $UTest->nextHint = 'The class copy does not contain old class name';
         $newFileContent = file_get_contents($newFileNameWithPath);
         $act = strpos($newFileContent, "class UTest\n{");
-        $UTest->isEqual("setClassEmulation(UTEST) - Step 2 - no replaced text", false, $act);
+        $UTest->isEqual("{$methodToReport} - Step 2 - no replaced text", false, $act);
 
         // Test: the file contains "class UTestUTCopy\n{"
         $UTest->nextHint = 'The class copy contains new class name';
         $act = strpos($newFileContent, "class UTestUTCopy\n{") !== false;
-        $UTest->isEqual("setClassEmulation(UTEST) - Step 3 - contains new class name", true, $act);
+        $UTest->isEqual("{$methodToReport} - Step 3 - contains new class name", true, $act);
 
         // Test: the file does not contain "$GLOBALS["
         $UTest->nextHint = 'The class copy file does not contain old text';
         $act = strpos($newFileContent, "\$GLOBALS[");
-        $UTest->isEqual("setClassEmulation(UTEST) - Step 4 - no replaced text", false, $act);
+        $UTest->isEqual("{$methodToReport} - Step 4 - no replaced text", false, $act);
 
         // Test: the file contains "$globalsTest["
         $UTest->nextHint = 'The class copy file contains new text';
         $act = strpos($newFileContent, "\$globalsTest[") !== false;
-        $UTest->isEqual("setClassEmulation(UTEST) - Step 5 - contains new text", true, $act);
+        $UTest->isEqual("{$methodToReport} - Step 5 - contains new text", true, $act);
 
         // Session uTestTemporaryFiles is set
         $UTest->nextHint = 'Session uTestTemporaryFiles is set';
         $act = isset($_SESSION['uTestTemporaryFiles'][$newFileNameWithPath]);
-        $UTest->isEqual("setClassEmulation(UTEST) - Step 6 - session is set", true, $act);
+        $UTest->isEqual("{$methodToReport} - Step 6 - session is set", true, $act);
 
-        // TODO: Add unsetClassEmulation here
+        // Unset method testing environment
+        $UTest->unsetClassEmulation(self::CLASS_FILE_NAME_WITH_PATH);
+
+
+        $methodToReport = 'setClassEmulation(UTEST, [search, replace])';
+        // Act
+        $UTest->setClassEmulation(self::CLASS_FILE_NAME_WITH_PATH, ['$GLOBALS[', '$globalsTest[']);
+
+        // Assert Tests
+        // TODO: Check that the new file is not yet exist
+        $UTest->nextHint = 'The file UTestUTCopy.php is created';
+        $newFileNameWithPath = __DIR__ . '/../src/UTestUTCopy.php';
+        $fileIsCreated = file_exists($newFileNameWithPath);
+        $UTest->isEqual("{$methodToReport} - Step 1 - file copy is created", true, $fileIsCreated);
+
+        // Test: the file does not contain "class UTest\n{"
+        $UTest->nextHint = 'The class copy does not contain old class name';
+        $newFileContent = file_get_contents($newFileNameWithPath);
+        $act = strpos($newFileContent, "class UTest\n{");
+        $UTest->isEqual("{$methodToReport} - Step 2 - no replaced text", false, $act);
+
+        // Test: the file contains "class UTestUTCopy\n{"
+        $UTest->nextHint = 'The class copy contains new class name';
+        $act = strpos($newFileContent, "class UTestUTCopy\n{") !== false;
+        $UTest->isEqual("{$methodToReport} - Step 3 - contains new class name", true, $act);
+
+        // Test: the file does not contain "$GLOBALS["
+        $UTest->nextHint = 'The class copy file does not contain old text';
+        $act = strpos($newFileContent, "\$GLOBALS[");
+        $UTest->isEqual("{$methodToReport} - Step 4 - no replaced text", false, $act);
+
+        // Test: the file contains "$globalsTest["
+        $UTest->nextHint = 'The class copy file contains new text';
+        $act = strpos($newFileContent, "\$globalsTest[") !== false;
+        $UTest->isEqual("{$methodToReport} - Step 5 - contains new text", true, $act);
+
+        // Session uTestTemporaryFiles is set
+        $UTest->nextHint = 'Session uTestTemporaryFiles is set';
+        $act = isset($_SESSION['uTestTemporaryFiles'][$newFileNameWithPath]);
+        $UTest->isEqual("{$methodToReport} - Step 6 - session is set", true, $act);
+
 
         return $UTest->functionResults;
     }
@@ -362,7 +401,7 @@ class UTestTest
         $UTest->isEqual("unsetClassEmulation(UTEST) - Step 2 - session is set", true, $act);
 
         // Act
-        $UTest->unsetClassEmulation(__DIR__ . '/../src/UTest.php');
+        $UTest->unsetClassEmulation(self::CLASS_FILE_NAME_WITH_PATH);
 
         $UTest->nextHint = 'Does UTestUTCopy.php file not exist';
         $newFileNameWithPath = __DIR__ . '/../src/UTestUTCopy.php';
