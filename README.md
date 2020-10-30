@@ -1,7 +1,7 @@
 # UTest
 PHP Unit Testing Class
 
-v1.8.0
+v1.9.0
 
 Using this class you can render unit tests results directly on a web page.
 
