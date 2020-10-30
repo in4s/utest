@@ -307,7 +307,7 @@ class UTestTest
         $fileIsCreated = file_exists($newFileNameWithPath);
         $UTest->isEqual("{$methodToReport} - Step 1 - file copy is created", true, $fileIsCreated);
 
-        // Test: the file does not contain "class UTest\n{" 
+        // Test: the file does not contain "class UTest\n{"
         $UTest->nextHint = 'The class copy does not contain old class name';
         $newFileContent = file_get_contents($newFileNameWithPath);
         $act = strpos($newFileContent, "class UTest\n{");
