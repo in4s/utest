@@ -30,5 +30,5 @@ The class code is documented by DocBlocks, so you can use it as documentation.
 ___
 #### Complies with standards:
 
-- RSR v0.16.0
+- RSR v0.90.1
 - Semantic Versioning 2.0.0 (https://semver.org/)
